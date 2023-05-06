@@ -15,7 +15,9 @@ import java.time.LocalDateTime;
 public class ConversationService {
     @Autowired
     private ConversationRepository conversationRepository;
+    @Autowired
     private PersonRepository personRepository;
+    @Autowired
     private chatGPTService chatGPTService;
 
     public void createConversation(conversationReq requestDto) {
@@ -29,7 +31,7 @@ public class ConversationService {
         member.setConsulting(requestDto.getConsulting());
 
 
-        Person person = personRepository.getById(requestDto.getId());
+        Person person = personRepository.findOne(requestDto.getId());
 
 
         Conversation conversation = new Conversation();
@@ -40,10 +42,10 @@ public class ConversationService {
         try {
             String script = chatGPTService.completeChat(requestDto.getConsulting());
             conversation.setScript(script);
-
+            conversationRepository.save(conversation);
         } catch (IllegalArgumentException e) {
             System.out.println("Error during updating lecture");
         }
-        conversationRepository.save(conversation);
+
     }
 }
