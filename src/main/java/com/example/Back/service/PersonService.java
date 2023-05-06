@@ -9,6 +9,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,7 @@ public class PersonService
 {
     private final PersonRepository personRepository;
 
+    private final Logger log = LoggerFactory.getLogger(getClass());
     //검색
     public List<Person> findPeople()
     {
@@ -112,6 +115,7 @@ public class PersonService
                     p.setBirthDate(dateOfBirth);
 
                     p.setPhotoUrl(imgUrl);
+                    log.info("사람 조회!!!!",name,dateOfBirth,imgUrl);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

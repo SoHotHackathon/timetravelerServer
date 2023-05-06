@@ -23,9 +23,9 @@ public class MemberController
     private final ConversationService conversationService;
 
     @GetMapping("/{member_id}")
-    public ResponseEntity<?> getConversationList()
+    public ResponseEntity<?> getConversationList(@PathVariable("member_id") Long member_id)
     {
-        List<Conversation> convs = conversationService.findAll();
+        List<Conversation> convs = conversationService.findConversationByMemberId(member_id);
         return ResponseEntity.ok().body(convs);
     }
 
