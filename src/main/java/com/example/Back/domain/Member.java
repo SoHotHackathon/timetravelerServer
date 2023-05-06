@@ -21,7 +21,7 @@ public class Member
     private Long id;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "member")
-    @JsonBackReference
+    @JsonManagedReference
     private List<Conversation> conversationList = new ArrayList<>();
 
     private String name;
