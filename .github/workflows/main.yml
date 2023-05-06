@@ -26,7 +26,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew clean build -x test
+        run: ./gradlew clean build -x test --stacktrace
       ## 3) Docker Hub에 이미지 push 하기
       - name: Docker build
         run: |
