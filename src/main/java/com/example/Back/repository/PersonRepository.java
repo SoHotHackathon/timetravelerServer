@@ -31,11 +31,9 @@ public class PersonRepository
                 .getResultList();
     }
 
-    public List<Person> findByName(String name)
-    {
-        //(JPQL,return type)
-        return em.createQuery("select p from Person p where p.name = :name",Person.class)
-                .setParameter("name",name)
+    public List<Person> findByCategoryId(Long categoryId) {
+        return em.createQuery("select p from Person p join p.category c where c.id = :categoryId", Person.class)
+                .setParameter("categoryId", categoryId)
                 .getResultList();
     }
 }

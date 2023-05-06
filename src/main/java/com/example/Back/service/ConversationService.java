@@ -24,7 +24,7 @@ public class ConversationService {
     @Autowired
     private chatGPTService chatGPTService;
 
-    public void createConversation(conversationReq requestDto) {
+    public String createConversation(conversationReq requestDto) {
 
         Person person = personRepository.findOne(requestDto.getPerson_id());
         Member member = new Member();
@@ -44,13 +44,12 @@ public class ConversationService {
 
         log.info("conversation 생성",conversation.getId());
 
-        try {
-            String script = chatGPTService.completeChat(requestDto.getConsulting());
-            System.out.println(script);
-            conversation.setScript(script);
-            conversationRepository.save(conversation);
-        } catch (IllegalArgumentException e) {
-            log.info("Error during updating lecture");
-        }
+
+        String script = chatGPTService.completeChat(requestDto.getConsulting());
+        System.out.println(script);
+        conversation.setScript(script);
+        conversationRepository.save(conversation);
+
+        return script;
     }
 }

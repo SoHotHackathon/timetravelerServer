@@ -16,8 +16,13 @@ public class PersonService
     private final PersonRepository personRepository;
 
     //검색
-    public List<Person> findPeople(PersonSearch personSearch)
+    public List<Person> findPeople()
     {
         return personRepository.findAll();
+    }
+
+    public List<Person> findByCategoryId(Long category_id)
+    {
+        return personRepository.findByCategoryId(category_id);
     }
 }
