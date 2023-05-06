@@ -17,7 +17,6 @@ public class ConversationController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createConversation(@RequestBody conversationReq requestDto) {
         conversationService.createConversation(requestDto);
-
     }
 
 

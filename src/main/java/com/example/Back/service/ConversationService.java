@@ -22,7 +22,6 @@ public class ConversationService {
 
     public void createConversation(conversationReq requestDto) {
 
-
         Person person = personRepository.findOne(requestDto.getPerson_id());
         Member member = new Member();
 
