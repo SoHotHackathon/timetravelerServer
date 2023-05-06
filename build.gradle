@@ -6,12 +6,22 @@ plugins {
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
-targetCompatibility = '17'
+
+
+jar{
+	enabled = false
+}
 
 repositories {
 	mavenCentral()
 }
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -20,6 +30,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.16'
 	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'mysql:mysql-connector-java'
 	//swagger
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
