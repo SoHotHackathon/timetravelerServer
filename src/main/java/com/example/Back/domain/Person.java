@@ -19,11 +19,8 @@ public class Person
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-
     private String name;
-
     private String photoUrl;
-
     private LocalDate birthDate;
     private LocalDate deathDate;
 
