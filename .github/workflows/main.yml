@@ -30,8 +30,8 @@ jobs:
       - name: Docker build
         run: |
           docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
-          docker build -t ${{ secrets.USERNAME }}/text-in-the-road-server:0.1 . 
-          docker push ${{ secrets.USERNAME }}/text-in-the-road-server:0.1
+          docker build -t ${{ secrets.USERNAME }}/hackaton2023:0.1 . 
+          docker push ${{ secrets.USERNAME }}/hackaton2023:0.1
 
       ## 4) Docker Hub에 Push한 이미지를 리눅스 서버에 받아와서 run
       - name: Deploy
@@ -44,5 +44,5 @@ jobs:
           script: |
             docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
             docker rm -f $(docker ps -qa)
-            docker pull ${{ secrets.USERNAME }}/text-in-the-road-server:0.1
-            docker run -d -p 8080:8080 ${{ secrets.USERNAME }}/text-in-the-road-server:0.1
+            docker pull ${{ secrets.USERNAME }}/hackaton2023:0.1
+            docker run -d -p 8080:8080 ${{ secrets.USERNAME }}/hackaton2023:0.1
