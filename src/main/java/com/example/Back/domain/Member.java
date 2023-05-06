@@ -1,11 +1,14 @@
 package com.example.Back.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 public class Member
@@ -14,6 +17,10 @@ public class Member
     @GeneratedValue
     @Column(name = "member_id")
     private Long id;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    @JsonManagedReference
+    private List<Conversation> conversationList = new ArrayList<>();
 
     private String name;
     @Enumerated(EnumType.STRING)
