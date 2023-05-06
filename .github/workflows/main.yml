@@ -16,6 +16,7 @@ jobs:
       ## 1) git ignore에 등록된 application.yml 파일 생성해주기
       - name: make application.yml
         run: |
+          mkdir -p ./src/main/resources
           cd ./src/main/resources 
           touch ./application.yml
           echo "${{ secrets.YML }}" > ./application.yml
