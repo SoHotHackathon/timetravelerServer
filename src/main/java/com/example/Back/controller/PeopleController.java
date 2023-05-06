@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +22,19 @@ public class PeopleController {
 
     @GetMapping("/people")
     @ResponseStatus(HttpStatus.OK)
-    public List<Person> getPeopleList(@ModelAttribute("personSearch") PersonSearch personSearch, Model model)
+    public ResponseEntity<?> getPeopleList()
     {
-        List<Person> people = personService.findPeople(personSearch);
+        List<Person> people = personService.findPeople();
         log.info("people", people);
-        return people;
+        return ResponseEntity.ok().body(people);
     }
+
+    @GetMapping("/people/{category_id}")
+    public ResponseEntity<?> getPeople(@PathVariable("category_id") Long category_id)
+    {
+        List<Person> people = personService.findByCategoryId(category_id);
+        log.info("people", people);
+        return ResponseEntity.ok().body(people);
+    }
+
 }
