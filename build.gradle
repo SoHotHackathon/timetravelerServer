@@ -13,8 +13,11 @@ version = '0.0.1-SNAPSHOT'
 jar{
 	enabled = false
 }
-repositories {
+pluginManagement {
+  repositories {
     mavenCentral()
+    gradlePluginPortal()
+  }
 }
 configurations {
 	compileOnly {
