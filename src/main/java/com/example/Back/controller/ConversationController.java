@@ -28,4 +28,7 @@ public class ConversationController {
         String script = conversationService.createConversation(memberId,personId);
         return ResponseEntity.ok().body(script);
     }
+
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.Back.controller;
 
+import com.example.Back.controller.dto.peopleListRequest;
 import com.example.Back.domain.Person;
 import com.example.Back.repository.PersonSearch;
 import com.example.Back.service.PersonService;
@@ -35,6 +36,14 @@ public class PeopleController {
         List<Person> people = personService.findByCategoryId(category_id);
         log.info("people", people);
         return ResponseEntity.ok().body(people);
+    }
+
+    @PostMapping("/people")
+    public ResponseEntity<?> postPeopleList(@RequestBody peopleListRequest peopleListRequest)
+    {
+        personService.getList(peopleListRequest);
+
+        return ResponseEntity.ok().body(peopleListRequest);
     }
 
 }
