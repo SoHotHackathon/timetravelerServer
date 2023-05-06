@@ -18,10 +18,10 @@ public class PeopleController {
 
     @GetMapping("/people")
     @ResponseStatus(HttpStatus.OK)
-    public void create(@ModelAttribute("personSearch") PersonSearch personSearch, Model model)
+    public List<Person> getPeopleList(@ModelAttribute("personSearch") PersonSearch personSearch, Model model)
     {
         List<Person> people = personService.findPeople(personSearch);
-        model.addAttribute("people",people);
+        return people;
     }
 
 

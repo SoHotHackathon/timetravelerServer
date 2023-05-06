@@ -29,24 +29,27 @@ public class ConversationService {
         member.setAge(requestDto.getAge());
         member.setMBTI(requestDto.getMbti());
         member.setJob(requestDto.getJob());
-
         member.setGender(requestDto.getGender());
         member.setConsulting(requestDto.getConsulting());
 
-
+        System.out.println("멤버 생성");
+        System.out.println(member.getId());
 
         Conversation conversation = new Conversation();
         conversation.setMember(member);
         conversation.setPerson(person);
         conversation.setCreatedTime(LocalDateTime.now());
 
+        System.out.println("conversation 생성");
+        System.out.println(conversation.getId());
+
         try {
             String script = chatGPTService.completeChat(requestDto.getConsulting());
+            System.out.println(script);
             conversation.setScript(script);
             conversationRepository.save(conversation);
         } catch (IllegalArgumentException e) {
             System.out.println("Error during updating lecture");
         }
-
     }
 }
