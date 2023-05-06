@@ -1,5 +1,6 @@
 package com.example.Back.repository;
 
+
 import com.example.Back.domain.Person;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

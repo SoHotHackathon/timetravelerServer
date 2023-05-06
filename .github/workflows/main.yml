@@ -44,6 +44,11 @@ jobs:
           envs: GITHUB_SHA  
           script: |
             docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
-            docker rm -f $(docker ps -qa)
+            if [ "$(docker ps -aq)" ]; then
+              docker rm -f $(docker ps -aq)
+            fi
+            if [ "$(docker images -q ${{ secrets.USERNAME }}/hackaton2023:0.1)" ]; then
+              docker rmi ${{ secrets.USERNAME }}/hackaton2023:0.1
+            fi
             docker pull ${{ secrets.USERNAME }}/hackaton2023:0.1
             docker run -d -p 8080:8080 ${{ secrets.USERNAME }}/hackaton2023:0.1
