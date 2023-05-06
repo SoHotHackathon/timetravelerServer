@@ -7,13 +7,13 @@ import lombok.Setter;
 
 @Getter @Setter
 public class conversationReq {
-	private Long id;
 
+
+	private Long person_id;
 	private String name;
 	private String field;
 
 
-	private Long userId;
 	private int age;
 	private Gender gender;
 	private String job;

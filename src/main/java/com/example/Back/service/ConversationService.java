@@ -22,16 +22,18 @@ public class ConversationService {
 
     public void createConversation(conversationReq requestDto) {
 
+
+        Person person = personRepository.findOne(requestDto.getPerson_id());
         Member member = new Member();
+
+
         member.setAge(requestDto.getAge());
         member.setMBTI(requestDto.getMbti());
         member.setJob(requestDto.getJob());
-        member.setName(requestDto.getName());
+
         member.setGender(requestDto.getGender());
         member.setConsulting(requestDto.getConsulting());
 
-
-        Person person = personRepository.findOne(requestDto.getId());
 
 
         Conversation conversation = new Conversation();
