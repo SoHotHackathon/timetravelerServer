@@ -6,29 +6,39 @@ import com.example.Back.domain.Member;
 import com.example.Back.domain.Person;
 import com.example.Back.repository.ConversationRepository;
 import com.example.Back.repository.PersonRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 
 @Service
+
 public class ConversationService
 {
+
     @Autowired
     private ConversationRepository conversationRepository;
+    @Autowired
     private PersonRepository personRepository;
+    @Autowired
     private chatGPTService chatGPTService;
+
 
     public void createConversation(conversationReq requestDto)
     {
 
+        Person person = personRepository.findOne(requestDto.getPerson_id());
         Member member = new Member();
+
         member.setAge(requestDto.getAge());
         member.setMBTI(requestDto.getMbti());
         member.setJob(requestDto.getJob());
-        member.setName(requestDto.getName());
         member.setGender(requestDto.getGender());
         member.setConsulting(requestDto.getConsulting());
+
 
         Person person = personRepository.getById(requestDto.getId());
 
@@ -79,6 +89,10 @@ public class ConversationService
         {
             System.out.println("Error during updating lecture");
         }
+
         conversationRepository.save(conversation);
+        entityManager.persist(conversation);
+
+        return script;
     }
 }

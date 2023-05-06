@@ -4,6 +4,7 @@ import com.example.Back.controller.dto.conversationReq;
 import com.example.Back.service.ConversationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,9 +15,9 @@ public class ConversationController {
     private ConversationService conversationService;
 
     @PostMapping("/new")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createConversation(@RequestBody conversationReq requestDto) {
-        conversationService.createConversation(requestDto);
+    public ResponseEntity<?> createConversation(@RequestBody conversationReq requestDto) {
+        String script = conversationService.createConversation(requestDto);
+        return ResponseEntity.ok().body(script);
     }
 
 
