@@ -38,7 +38,7 @@ public class PeopleController {
         return ResponseEntity.ok().body(people);
     }
 
-    @PostMapping("/people")
+    @PostMapping("/")
     public ResponseEntity<?> postPeopleList(@RequestBody peopleListRequest peopleListRequest)
     {
         personService.getList(peopleListRequest);
