@@ -6,13 +6,13 @@ import com.example.Back.domain.Member;
 import com.example.Back.domain.Person;
 import com.example.Back.repository.ConversationRepository;
 import com.example.Back.repository.PersonRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 
@@ -25,12 +25,13 @@ public class ConversationService
     private PersonRepository personRepository;
     @Autowired
     private chatGPTService chatGPTService;
+    @Autowired
+    private EntityManager em;
 
 
-    public void createConversation(conversationReq requestDto)
+    public String createConversation(conversationReq requestDto)
     {
 
-        Person person = personRepository.findOne(requestDto.getPerson_id());
         Member member = new Member();
 
         member.setAge(requestDto.getAge());
@@ -40,7 +41,7 @@ public class ConversationService
         member.setConsulting(requestDto.getConsulting());
 
 
-        Person person = personRepository.getById(requestDto.getId());
+        Person person = personRepository.findOne(requestDto.getPerson_id());
 
         Conversation conversation = new Conversation();
         conversation.setMember(member);
@@ -67,32 +68,38 @@ public class ConversationService
                         "'대화 종료', '대화 시작' 이런 것도 출력하지마.\n" +
                         "위 다섯가지 조건을 지켜서 대화 스크립트를 작성해줘.";
 
+        String toJson = "";
 
         try
         {
             String completedChat = chatGPTService.completeChat(prompt);
-            conversation.setScript(completedChat);
+//            conversation.setScript(completedChat);
 
             String jsonOrder = completedChat + "의 내용을 JSON으로 변환해. 반드시 JSON으로만 변환할 것을 명심해."
-                    + "JSON의 형식은 아래와 따르도록해.\n"
+                    + "JSON의 형식은 아래를 따르도록해.\n"
                     + "{'conversation'/*전체 대화*/ : +" +
                     "[" +
                     "{'member' : /*말하는 사람의 이름*/, 'message' : /*말한 내용*/}" +
                     " /*'member', 'message' 반복*/" +
                     "]";
 
-            String toJson = chatGPTService.completeChat(jsonOrder);
-
-
+            toJson = chatGPTService.completeChat(completedChat);
+            
 
         } catch (IllegalArgumentException e)
         {
-            System.out.println("Error during updating lecture");
+            System.out.println("Error during formatting to JSON");
         }
 
+        conversation.setScript(toJson);
         conversationRepository.save(conversation);
-        entityManager.persist(conversation);
 
-        return script;
+        return prompt;
     }
+
+    public List<Conversation> findAll()
+    {
+        return conversationRepository.findAll();
+    }
+
 }

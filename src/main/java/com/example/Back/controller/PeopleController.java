@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController @RequestMapping("/api/v1/chat")
+@RestController @RequestMapping("/api/v1/people")
 @RequiredArgsConstructor
 public class PeopleController {
 
     private final PersonService personService;
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @GetMapping("/people")
+    @GetMapping("")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getPeopleList()
     {
@@ -29,7 +29,7 @@ public class PeopleController {
         return ResponseEntity.ok().body(people);
     }
 
-    @GetMapping("/people/{category_id}")
+    @GetMapping("/{category_id}")
     public ResponseEntity<?> getPeople(@PathVariable("category_id") Long category_id)
     {
         List<Person> people = personService.findByCategoryId(category_id);
