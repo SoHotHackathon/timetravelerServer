@@ -115,7 +115,10 @@ public class PersonService
                     p.setBirthDate(dateOfBirth);
 
                     p.setPhotoUrl(imgUrl);
-                    log.info("사람 조회!!!!",name,dateOfBirth,imgUrl);
+                    System.out.println("사람 조회!!!!");
+                    System.out.println(name);
+                    System.out.println(dateOfBirth);
+                    System.out.println(imgUrl);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
