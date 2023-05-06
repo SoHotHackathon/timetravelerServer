@@ -41,6 +41,7 @@ jobs:
           host: ${{ secrets.AWS_TEST_X_HOST }}
           username: ${{ secrets.AWS_TEST_X_USERNAME }}
           key: ${{ secrets.AWS_TEST_X_KEY }}
+          port: 22
           envs: GITHUB_SHA  
           script: |
             docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
