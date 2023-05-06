@@ -44,7 +44,6 @@ jobs:
           port: 22
           envs: GITHUB_SHA  
           script: |
-            ssh-add <(echo "${{ secrets.AWS_TEST_X_KEY }}")
             docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
             docker rm -f $(docker ps -qa)
             docker pull ${{ secrets.USERNAME }}/hackaton2023:0.1
