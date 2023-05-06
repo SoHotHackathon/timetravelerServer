@@ -14,11 +14,10 @@ public class ConversationController {
     @Autowired
     private ConversationService conversationService;
 
-    @PostMapping("/new")
-    public ResponseEntity<?> createConversation(@RequestBody conversationReq requestDto) {
-        String script = conversationService.createConversation(requestDto);
+    @PostMapping("/people")
+    public ResponseEntity<?> createConversation(@RequestParam("member_id") Long memberId,
+                                       @RequestParam("person_id") Long personId) {
+        String script = conversationService.createConversation(memberId,personId);
         return ResponseEntity.ok().body(script);
     }
-
-
 }

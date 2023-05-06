@@ -7,18 +7,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class conversationReq {
-
 	private Long person_id;
-	private String name;
-	private String field;
+	private Long member_id;
 
-
-	private int age;
-	private Gender gender;
-	private String job;
-	private MBTI mbti;
-
-	private String consulting;
-
-	// getters, setters, constructors
 }
