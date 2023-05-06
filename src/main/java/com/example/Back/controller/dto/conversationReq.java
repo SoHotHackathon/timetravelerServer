@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter @Setter
 public class conversationReq {
 
-
 	private Long person_id;
 	private String name;
 	private String field;
@@ -20,7 +19,6 @@ public class conversationReq {
 	private MBTI mbti;
 
 	private String consulting;
-	private String gptScript;
 
 	// getters, setters, constructors
 }
