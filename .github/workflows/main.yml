@@ -1,0 +1,48 @@
+name: Spring Boot & Gradle & Docker & EC2
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest #ubuntu-20.04
+    steps:
+      # 기본 체크아웃
+      - name: Checkout
+        uses: actions/checkout@v3
+      ## 1) git ignore에 등록된 application.yml 파일 생성해주기
+      - name: make application.yml
+        run: |
+          cd ./src/main/resources 
+          touch ./application.yml
+          echo "${{ secrets.YML }}" > ./application.yml
+        shell: bash
+
+      ## 2) 스프링 프로젝트 jar 파일 빌드
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew clean build --no-daemon
+      ## 3) Docker Hub에 이미지 push 하기
+      - name: Docker build
+        run: |
+          docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
+          docker build -t ${{ secrets.USERNAME }}/text-in-the-road-server:0.1 . 
+          docker push ${{ secrets.USERNAME }}/text-in-the-road-server:0.1
+
+      ## 4) Docker Hub에 Push한 이미지를 리눅스 서버에 받아와서 run
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_TEST_X_HOST }}
+          username: ${{ secrets.AWS_TEST_X_USERNAME }}
+          key: ${{ secrets.AWS_TEST_X_KEY }}
+          envs: GITHUB_SHA  
+          script: |
+            docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
+            docker rm -f $(docker ps -qa)
+            docker pull ${{ secrets.USERNAME }}/text-in-the-road-server:0.1
+            docker run -d -p 8080:8080 ${{ secrets.USERNAME }}/text-in-the-road-server:0.1
