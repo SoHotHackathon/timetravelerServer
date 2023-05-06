@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Service
 public class ConversationService {
     private final Logger log = LoggerFactory.getLogger(getClass());
-
+    @Autowired
     EntityManager entityManager;
     @Autowired
     private ConversationRepository conversationRepository;
