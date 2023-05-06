@@ -36,7 +36,7 @@ jobs:
 
       ## 4) Docker Hub에 Push한 이미지를 리눅스 서버에 받아와서 run
       - name: Deploy
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.AWS_TEST_X_HOST }}
           username: ${{ secrets.AWS_TEST_X_USERNAME }}
@@ -44,6 +44,7 @@ jobs:
           port: 22
           envs: GITHUB_SHA  
           script: |
+            ssh-add <(echo "${{ secrets.AWS_TEST_X_KEY }}")
             docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
             docker rm -f $(docker ps -qa)
             docker pull ${{ secrets.USERNAME }}/hackaton2023:0.1
