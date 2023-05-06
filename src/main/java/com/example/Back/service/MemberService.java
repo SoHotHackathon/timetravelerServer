@@ -18,16 +18,10 @@ public class MemberService {
     }
 
     public Long createMember(memberReq memberReq) {
-        Member member = new Member();
 
-        member.setJob(memberReq.getJob());
-        member.setName(memberReq.getName());
-        member.setGender(memberReq.getGender());
-        member.setAge(memberReq.getAge());
-        member.setMBTI(memberReq.getMbti());
-        member.setConsulting(memberReq.getConsulting());
+        Member member = new Member();
+        member.createMember(memberReq);
         memberRepository.save(member);
         return member.getId();
     }
-
 }

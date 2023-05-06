@@ -1,5 +1,6 @@
 package com.example.Back.domain;
 
+import com.example.Back.controller.dto.memberReq;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -37,4 +38,19 @@ public class Member
 
     @Lob
     private String consulting;
+
+    public Long createMember(memberReq memberReq) {
+        Member member = new Member();
+
+        member.setJob(memberReq.getJob());
+        member.setName(memberReq.getName());
+        member.setGender(memberReq.getGender());
+        member.setAge(memberReq.getAge());
+        member.setMBTI(memberReq.getMbti());
+        member.setConsulting(memberReq.getConsulting());
+
+        return member.getId();
+    }
+
+
 }
