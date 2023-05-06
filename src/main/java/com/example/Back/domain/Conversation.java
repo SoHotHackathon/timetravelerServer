@@ -21,11 +21,12 @@ public class Conversation
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    @JsonManagedReference
+    @JsonBackReference
     private Member member;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "person_id")
+    @JsonBackReference
     private Person person;
 
     @Lob
