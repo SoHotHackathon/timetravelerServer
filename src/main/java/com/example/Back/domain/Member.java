@@ -1,5 +1,6 @@
 package com.example.Back.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity @Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@JsonIdentityReference(alwaysAsId = true)
 public class Member
 {
     @Id
@@ -18,7 +20,7 @@ public class Member
     @Column(name = "member_id")
     private Long id;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "member")
     @JsonManagedReference
     private List<Conversation> conversationList = new ArrayList<>();
 
