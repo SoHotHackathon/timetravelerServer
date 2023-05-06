@@ -19,7 +19,6 @@ public class Conversation
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    @JsonManagedReference
     private Member member;
 
     @OneToOne(fetch = FetchType.LAZY)

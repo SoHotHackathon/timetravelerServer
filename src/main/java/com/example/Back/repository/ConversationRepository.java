@@ -10,7 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ConversationRepository extends JpaRepository<Conversation, Long>{
-    @Query("select c from Conversation c join fetch c.member join fetch c.member where c.member = :member_id")
+    @Query("select c from Conversation c join c.member m where m.id = :member_id")
     List<Conversation> findConversationByMemberId(@Param("member_id") Long member_id);
-
 };

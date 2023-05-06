@@ -1,14 +1,11 @@
 server:
-  error:
-    whitelabel:
-      enabled: false
-  shutdown: graceful
+  port: 8080
 
 spring:
   datasource:
-    url: jdbc:mysql://database-2.cbtfuwm9aisc.ap-northeast-2.rds.amazonaws.com:3306/hackaton?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/hackaton
     username: root
-    password: chatgpt!!
+    password: root
   driver-class-name: com.mysql.cj.jdbc.Driver
   mustache:
     prefix: classpath:/templates/
