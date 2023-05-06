@@ -82,9 +82,9 @@ public class ConversationService {
         return conversation.getScript();
     }
 
-    public List<Conversation> findAll()
+    public List<Conversation> findConversationByMemberId(Long member_id)
     {
-        return conversationRepository.findAll();
+        return conversationRepository.findConversationByMemberId(member_id);
     }
 
 }
