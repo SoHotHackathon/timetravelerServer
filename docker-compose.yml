@@ -1,0 +1,10 @@
+version: '3'
+services:
+
+  spring:
+    container_name: spring
+    image: jeonyoungseo/hackaton2023:0.1
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
