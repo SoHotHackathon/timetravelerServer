@@ -1,5 +1,6 @@
 package com.example.Back.controller;
 
+
 import com.example.Back.domain.Conversation;
 import com.example.Back.domain.Person;
 import com.example.Back.service.ConversationService;
@@ -26,5 +27,6 @@ public class MemberController
         List<Conversation> convs = conversationService.findAll();
         return ResponseEntity.ok().body(convs);
     }
+
 
 }

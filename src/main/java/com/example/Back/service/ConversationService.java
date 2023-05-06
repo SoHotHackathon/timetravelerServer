@@ -5,28 +5,30 @@ import com.example.Back.domain.Conversation;
 import com.example.Back.domain.Member;
 import com.example.Back.domain.Person;
 import com.example.Back.repository.ConversationRepository;
+import com.example.Back.repository.MemberRepository;
 import com.example.Back.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-
-public class ConversationService
-{
+public class ConversationService {
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private ConversationRepository conversationRepository;
     @Autowired
     private PersonRepository personRepository;
     @Autowired
+    private MemberRepository memberRepository;
+    @Autowired
     private chatGPTService chatGPTService;
     @Autowired
     private EntityManager em;
+
+    public String createConversation(Long memberId,Long personId) {
 
 
     public String createConversation(conversationReq requestDto)
@@ -43,7 +45,9 @@ public class ConversationService
 
         Person person = personRepository.findOne(requestDto.getPerson_id());
 
+
         Conversation conversation = new Conversation();
+
         conversation.setMember(member);
         conversation.setPerson(person);
         conversation.setCreatedTime(LocalDateTime.now());
@@ -51,7 +55,7 @@ public class ConversationService
         final String prompt =
                 "나는 " + member.getAge() + "세 " +
                         member.getGender() + "직장인이고 " +
-                        "mbti는 " + requestDto.getMbti() +
+                        "mbti는 " + member.getMBTI() +
                         ", 이름은 " + member.getName() + "이야.\n" +
                         "내 고민은 " + member.getConsulting() + "\n" +
                         person.getName() + "에게 이 내용을 상담받고싶어.\n" +
@@ -68,7 +72,9 @@ public class ConversationService
                         "'대화 종료', '대화 시작' 이런 것도 출력하지마.\n" +
                         "위 다섯가지 조건을 지켜서 대화 스크립트를 작성해줘.";
 
+
         String toJson = "";
+
 
         try
         {
@@ -83,6 +89,7 @@ public class ConversationService
                     " /*'member', 'message' 반복*/" +
                     "]";
 
+
             toJson = chatGPTService.completeChat(completedChat);
             
 
@@ -94,6 +101,7 @@ public class ConversationService
         conversation.setScript(toJson);
         conversationRepository.save(conversation);
 
+
         return prompt;
     }
 
@@ -101,5 +109,6 @@ public class ConversationService
     {
         return conversationRepository.findAll();
     }
+
 
 }
