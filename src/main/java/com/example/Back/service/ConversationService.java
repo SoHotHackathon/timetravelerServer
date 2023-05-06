@@ -11,12 +11,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 
 @Service
 public class ConversationService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+    EntityManager entityManager;
     @Autowired
     private ConversationRepository conversationRepository;
     @Autowired
@@ -35,6 +37,8 @@ public class ConversationService {
         member.setGender(requestDto.getGender());
         member.setConsulting(requestDto.getConsulting());
 
+
+        entityManager.persist(member);
         log.info("멤버 생성",member.getId());
 
         Conversation conversation = new Conversation();
@@ -47,8 +51,10 @@ public class ConversationService {
 
         String script = chatGPTService.completeChat(requestDto.getConsulting());
         System.out.println(script);
+
         conversation.setScript(script);
         conversationRepository.save(conversation);
+        entityManager.persist(conversation);
 
         return script;
     }
